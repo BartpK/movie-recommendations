@@ -1,0 +1,188 @@
+//Colors
+$backgroundColor: #0B132B;
+$backgroundColor2: #1C2541;
+$backgroundColor3: #3A506B;
+$accentColor: #6FFFE9;
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+
+  .ResultsBox {
+      
+ position: absolute;
+ top: 0;
+ bottom: 0;
+ left: 0;
+ right: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; 
+    padding: 1rem;
+    background-color: $backgroundColor;
+    overflow: scroll;
+  }
+  
+  .Movie {
+    width: 100%;
+  }
+  
+  .Movie img {
+    display: block;
+    width: 100%;
+  }
+  
+  #MovieDetails {
+    
+    background-color: $backgroundColor2;
+    position: sticky;
+    overflow: hidden;
+    bottom: 0; 
+    transition: transform 200ms;
+    height: 100vh;
+    color: white;
+    
+  }
+  
+  .closed {
+    transform: translateX(-100vh);
+    transition: transform 200ms;
+  }
+  
+  .open {
+    height: 100vh;
+    transform: translateX(0);
+    transition: transform 200ms;
+    z-index: 2;
+  }
+  
+  .moviedetailsheader {
+    min-height: 12rem;
+    position: relative;
+  }
+  
+  .moviedetailsheaderoverlay {
+    background-color: rgba(105,105,105, 0.6);
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    top:0;
+    left:0;
+    right: 0;
+    padding: 1rem;
+  }
+  
+  .moviedetailsheaderoverlay h1 {
+    align-self: flex-end;
+    color: white;
+  }
+  
+  .genretags span {
+    background-color: $backgroundColor3;
+    color: white;
+    border-radius: 20px;
+    padding: 0.2rem 0.4rem;
+    margin-right: 0.2rem;
+    display: inline-block;
+  }
+
+  .genretags {
+      padding: 1rem;
+  }
+  
+  .SearchBox {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    transform: translateY(-420px);
+    transition: transform 200ms;
+    background-color: $backgroundColor2;
+    text-align: center;
+    color: white;
+    clip-path: (polygon(0 0, 0 90%, 40% 90%, 40% 100%, 60% 100%, 60% 90%, 100% 90%, 100% 0,));
+  }
+  
+  .SearchBoxOpen {
+    transform: translateY(0px);
+  }
+
+  .searchinput, .releasedatecontainer select, .sortcontainer select {
+      margin: 1rem;
+      width: 80%;
+      padding: 0.6rem 0.4rem;
+      box-sizing: border-box;
+      background-color: $backgroundColor;
+      border:none;
+      border-bottom: white solid 1px;
+      color: white;
+  }
+
+  .searchbuttoncontainer button {
+    background-color: $accentColor;
+    border-radius: 1rem;
+    padding: 0.4rem 0.6rem;
+    border: none;
+  }
+
+  .genrecontainer {
+      width: 80%;
+      display: block;
+      margin: 0 auto;
+  }
+
+  .genrebutton {    
+      border-radius: 1rem;
+      padding: 0.4rem;
+      margin: 0.1rem;
+      background-color: $backgroundColor;
+      color: white;
+      border: none;
+  }
+
+  .genrebuttonselected {
+      background-color: $accentColor;
+      border-radius: 1rem;
+      padding: 0.4rem;
+      margin: 0.1rem;
+      color: $backgroundColor;
+      border: none;
+  }
+  
+  .releasedatecontainer select {
+      width: 25%;
+      margin: 1rem 0.2rem;
+  }
+  
+  .togglesearch {
+      font-size: 2rem;
+      margin-top: 1rem;
+      padding: 1rem;
+  }
+
+  .caretopen {
+      transform: rotate(0deg);
+  }
+
+  .caretclosed {
+    transform: rotate(180deg);
+  }
+
+  #caret {
+      transition: transform 400ms;
+  }
+
+  .synopsis, .releasedate, .averagerating, .trailerlink {
+      padding: 1rem;
+  }
+
+  .trailerlink {
+      color: white;
+  }
+
+.moviedetailsheaderoverlay i {
+    display:block;
+    position: absolute;
+    right: 5%;
+}
