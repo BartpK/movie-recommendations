@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-function Movie(props) {
+function Movie({ movie, viewMovieDetails }) {
     return (
-        <div className="Movie" onClick={() => props.viewMovieDetails(props.movie)}>
-            <img src={`https://image.tmdb.org/t/p/w185${props.movie.poster_path}`} />
+        <div
+            className="Movie"
+            onClick={() => viewMovieDetails(movie)}
+        >
+            <img
+                src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`} />
         </div>
     );
 

@@ -1,34 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import Movie from './Movie'
+import React from "react";
+import Movie from "./Movie";
 
 function ResultsBox(props) {
-    const handleScroll = (e) => {
-        const bounding = document.querySelector('#scrolltarget').getBoundingClientRect()
-        if (bounding.top < 1000) props.getNextPage();
-    }
+  console.log(props.movies);
+  if (!props.movies) return null;
+  const handleScroll = (e) => {
+    const bounding = document
+      .querySelector("#scrolltarget")
+      .getBoundingClientRect();
+    if (bounding.top < 1000) props.getNextPage();
+  };
 
-    if (props.movies) {
-        const Movies = props.movies.map(movieElement => {
-            return <Movie key={movieElement.id} movie={movieElement} viewMovieDetails={props.viewMovieDetails} />
-        })
-        return (
-            <div className="ResultsBox"
-                onScroll={(e) => handleScroll(e)}>
-                {Movies}
-                <div id="scrolltarget"></div>
-            </div>
-        );
+  const watchlistHeader = props.showWatchlist ? (
+    <h1 className="watchlistheader">Your watchlist</h1>
+  ) : null;
 
-
-
-    } else {
-        return (
-            <div className="App">
-                <h1>Loading movies</h1>
-            </div>
-        );
-    }
+  const moviesToDisplay = props.movies.map((movieElement) => {
+    return (
+      <Movie
+        key={movieElement.id}
+        movie={movieElement}
+        viewMovieDetails={props.viewMovieDetails}
+      />
+    );
+  });
+  return (
+    <section className="ResultsBox" onScroll={(e) => handleScroll(e)}>
+      {watchlistHeader}
+      {moviesToDisplay}
+      <div id="scrolltarget"></div>
+    </section>
+  );
 }
-
 
 export default ResultsBox;
