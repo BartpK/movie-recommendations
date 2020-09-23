@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { getMovies } from "./utils/apiCalls";
 import ResultsBox from "./components/ResultsBox";
@@ -6,6 +7,7 @@ import SearchBox from "./components/SearchBox";
 import MovieDetails from "./components/MovieDetails";
 import Navbar from "./components/Navbar";
 import { styled, createGlobalStyle } from "styled-components";
+import { getCast } from "./utils/apiCalls";
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -34,6 +36,7 @@ function App() {
   const [showSearchBox, setShowSearchBox] = useState(false);
   const [showWatchlist, setShowWatchlist] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
+  const [selectedCast, setSelectedCast] = useState();
 
   const saveToWatchlist = (movieObj) => {
     if (watchlist) {
@@ -86,9 +89,15 @@ function App() {
     });
   };
 
+  const handleCastRequest = async (movieID) => {
+    const cast = await getCast(movieID);
+    setSelectedCast(cast);
+  };
+
   const viewMovieDetails = (movieObj) => {
     setHighlightedMovie(movieObj);
     toggleMovieDetails();
+    handleCastRequest(movieObj.id);
   };
 
   const getNextPage = async () => {
@@ -115,32 +124,117 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <Router>
       <GlobalStyle />
-      <SearchBox
-        searchMovies={searchMovies}
-        toggleSearchBox={toggleSearchBox}
-        showSearchBox={showSearchBox}
-      />
-      <ResultsBox
-        movies={movies}
-        getNextPage={getNextPage}
-        viewMovieDetails={viewMovieDetails}
-        showWatchlist={showWatchlist}
-      />
-      <MovieDetails
-        toggleMovieDetails={toggleMovieDetails}
-        highlightedMovie={highlightedMovie}
-        showMovieDetails={showMovieDetails}
-        saveToWatchlist={saveToWatchlist}
-        removeFromWatchlist={removeFromWatchlist}
-        watchlist={watchlist}
-      />
-      {/* <div className="watchlistbutton" onClick={toggleWatchlist}>
+      <div className="App">
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return (
+              <div>
+                <SearchBox
+                  searchMovies={searchMovies}
+                  toggleSearchBox={toggleSearchBox}
+                  showSearchBox={showSearchBox}
+                />
+                <ResultsBox
+                  movies={movies}
+                  getNextPage={getNextPage}
+                  viewMovieDetails={viewMovieDetails}
+                />
+                <MovieDetails
+                  toggleMovieDetails={toggleMovieDetails}
+                  highlightedMovie={highlightedMovie}
+                  showMovieDetails={showMovieDetails}
+                  saveToWatchlist={saveToWatchlist}
+                  removeFromWatchlist={removeFromWatchlist}
+                  watchlist={watchlist}
+                  selectedCast={selectedCast}
+                />
+              </div>
+            );
+          }}
+        />
+
+        <Route
+          exact
+          path="/watchlist"
+          render={() => {
+            return (
+              <div>
+                <ResultsBox
+                  headline={"Your watchlist"}
+                  movies={watchlist}
+                  getNextPage={getNextPage}
+                  viewMovieDetails={viewMovieDetails}
+                />
+                <MovieDetails
+                  toggleMovieDetails={toggleMovieDetails}
+                  highlightedMovie={highlightedMovie}
+                  showMovieDetails={showMovieDetails}
+                  saveToWatchlist={saveToWatchlist}
+                  removeFromWatchlist={removeFromWatchlist}
+                  watchlist={watchlist}
+                  selectedCast={selectedCast}
+                />
+              </div>
+            );
+          }}
+        />
+
+        <Route
+          exact
+          path="/recommended"
+          render={() => {
+            return (
+              <div>
+                <ResultsBox
+                  headline={"Recommended for you (in progress)"}
+                  movies={movies}
+                  getNextPage={getNextPage}
+                  viewMovieDetails={viewMovieDetails}
+                  showWatchlist={showWatchlist}
+                />
+                <MovieDetails
+                  toggleMovieDetails={toggleMovieDetails}
+                  highlightedMovie={highlightedMovie}
+                  showMovieDetails={showMovieDetails}
+                  saveToWatchlist={saveToWatchlist}
+                  removeFromWatchlist={removeFromWatchlist}
+                  watchlist={watchlist}
+                  selectedCast={selectedCast}
+                />
+              </div>
+            );
+          }}
+        />
+
+        {/* <SearchBox
+          searchMovies={searchMovies}
+          toggleSearchBox={toggleSearchBox}
+          showSearchBox={showSearchBox}
+        />
+        <ResultsBox
+          movies={movies}
+          getNextPage={getNextPage}
+          viewMovieDetails={viewMovieDetails}
+          showWatchlist={showWatchlist}
+        />
+        <MovieDetails
+          toggleMovieDetails={toggleMovieDetails}
+          highlightedMovie={highlightedMovie}
+          showMovieDetails={showMovieDetails}
+          saveToWatchlist={saveToWatchlist}
+          removeFromWatchlist={removeFromWatchlist}
+          watchlist={watchlist}
+        /> */}
+        {/* <div className="watchlistbutton" onClick={toggleWatchlist}>
         <i className="fas fa-bookmark"></i>
       </div> */}
-      <Navbar />
-    </div>
+        <Navbar />
+      </div>
+    </Router>
   );
 }
 

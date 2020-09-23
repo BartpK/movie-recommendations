@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { BrowserRouter as Router, Link, Switch } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,6 +14,9 @@ const Wrapper = styled.div`
   div:nth-child(2) {
     border-left: #535a6e 1px solid;
     border-right: #535a6e 1px solid;
+  }
+  a {
+    text-decoration: none;
   }
 `;
 
@@ -31,19 +35,26 @@ const Navbar = (props) => {
   return (
     <Wrapper>
       <Navitem>
-        <i className="fas fa-search"></i>
-
-        <p>Discover</p>
+        <Link to="/">
+          <i className="fas fa-search"></i>
+          <p>Discover</p>
+        </Link>
       </Navitem>
-      <Navitem>
-        <i className="far fa-star"></i>
 
-        <p>Recommended</p>
+      <Navitem>
+        <Link to="/recommended">
+          <i className="far fa-star"></i>
+
+          <p>Recommended</p>
+        </Link>
       </Navitem>
-      <Navitem>
-        <i className="far fa-bookmark"></i>
 
-        <p>Watchlist</p>
+      <Navitem>
+        <Link to="/watchlist">
+          <i className="far fa-bookmark"></i>
+
+          <p>Watchlist</p>
+        </Link>
       </Navitem>
     </Wrapper>
   );
