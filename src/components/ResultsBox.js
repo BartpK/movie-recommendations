@@ -6,11 +6,21 @@ const Wrapper = styled.div`
   background-color: #0b132b;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(9, 1fr);
   gap: 0.6rem;
   padding: 0.6rem;
   max-height: 100vh;
+  min-height: 100vh;
   overflow: scroll;
   max-width: 100vw;
+`;
+
+const Headline = styled.h1`
+  grid-column: 1/-1;
+  grid-row: 1;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2rem;
 `;
 
 function ResultsBox(props) {
@@ -38,6 +48,7 @@ function ResultsBox(props) {
   });
   return (
     <Wrapper onScroll={(e) => handleScroll(e)}>
+      {props.headline ? <Headline>{props.headline}</Headline> : null}
       {watchlistHeader}
       {moviesToDisplay}
       <div id="scrolltarget"></div>

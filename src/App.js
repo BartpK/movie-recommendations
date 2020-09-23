@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { getMovies } from "./utils/apiCalls";
 import ResultsBox from "./components/ResultsBox";
@@ -115,32 +116,114 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <Router>
       <GlobalStyle />
-      <SearchBox
-        searchMovies={searchMovies}
-        toggleSearchBox={toggleSearchBox}
-        showSearchBox={showSearchBox}
-      />
-      <ResultsBox
-        movies={movies}
-        getNextPage={getNextPage}
-        viewMovieDetails={viewMovieDetails}
-        showWatchlist={showWatchlist}
-      />
-      <MovieDetails
-        toggleMovieDetails={toggleMovieDetails}
-        highlightedMovie={highlightedMovie}
-        showMovieDetails={showMovieDetails}
-        saveToWatchlist={saveToWatchlist}
-        removeFromWatchlist={removeFromWatchlist}
-        watchlist={watchlist}
-      />
-      {/* <div className="watchlistbutton" onClick={toggleWatchlist}>
+      <div className="App">
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return (
+              <div>
+                <SearchBox
+                  searchMovies={searchMovies}
+                  toggleSearchBox={toggleSearchBox}
+                  showSearchBox={showSearchBox}
+                />
+                <ResultsBox
+                  movies={movies}
+                  getNextPage={getNextPage}
+                  viewMovieDetails={viewMovieDetails}
+                />
+                <MovieDetails
+                  toggleMovieDetails={toggleMovieDetails}
+                  highlightedMovie={highlightedMovie}
+                  showMovieDetails={showMovieDetails}
+                  saveToWatchlist={saveToWatchlist}
+                  removeFromWatchlist={removeFromWatchlist}
+                  watchlist={watchlist}
+                />
+              </div>
+            );
+          }}
+        />
+
+        <Route
+          exact
+          path="/watchlist"
+          render={() => {
+            return (
+              <div>
+                <ResultsBox
+                  headline={"Your watchlist"}
+                  movies={watchlist}
+                  getNextPage={getNextPage}
+                  viewMovieDetails={viewMovieDetails}
+                />
+                <MovieDetails
+                  toggleMovieDetails={toggleMovieDetails}
+                  highlightedMovie={highlightedMovie}
+                  showMovieDetails={showMovieDetails}
+                  saveToWatchlist={saveToWatchlist}
+                  removeFromWatchlist={removeFromWatchlist}
+                  watchlist={watchlist}
+                />
+              </div>
+            );
+          }}
+        />
+
+        <Route
+          exact
+          path="/recommended"
+          render={() => {
+            return (
+              <div>
+                <ResultsBox
+                  headline={"Recommended for you (in progress)"}
+                  movies={movies}
+                  getNextPage={getNextPage}
+                  viewMovieDetails={viewMovieDetails}
+                  showWatchlist={showWatchlist}
+                />
+                <MovieDetails
+                  toggleMovieDetails={toggleMovieDetails}
+                  highlightedMovie={highlightedMovie}
+                  showMovieDetails={showMovieDetails}
+                  saveToWatchlist={saveToWatchlist}
+                  removeFromWatchlist={removeFromWatchlist}
+                  watchlist={watchlist}
+                />
+              </div>
+            );
+          }}
+        />
+
+        {/* <SearchBox
+          searchMovies={searchMovies}
+          toggleSearchBox={toggleSearchBox}
+          showSearchBox={showSearchBox}
+        />
+        <ResultsBox
+          movies={movies}
+          getNextPage={getNextPage}
+          viewMovieDetails={viewMovieDetails}
+          showWatchlist={showWatchlist}
+        />
+        <MovieDetails
+          toggleMovieDetails={toggleMovieDetails}
+          highlightedMovie={highlightedMovie}
+          showMovieDetails={showMovieDetails}
+          saveToWatchlist={saveToWatchlist}
+          removeFromWatchlist={removeFromWatchlist}
+          watchlist={watchlist}
+        /> */}
+        {/* <div className="watchlistbutton" onClick={toggleWatchlist}>
         <i className="fas fa-bookmark"></i>
       </div> */}
-      <Navbar />
-    </div>
+        <Navbar />
+      </div>
+    </Router>
   );
 }
 
