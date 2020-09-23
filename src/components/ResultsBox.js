@@ -1,9 +1,20 @@
 import React from "react";
 import Movie from "./Movie";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  background-color: #0b132b;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  padding: 0.6rem;
+  max-height: 100vh;
+  overflow: scroll;
+`;
 
 function ResultsBox(props) {
-  console.log(props.movies);
   if (!props.movies) return null;
+
   const handleScroll = (e) => {
     const bounding = document
       .querySelector("#scrolltarget")
@@ -25,11 +36,13 @@ function ResultsBox(props) {
     );
   });
   return (
-    <section className="ResultsBox" onScroll={(e) => handleScroll(e)}>
+    <Wrapper onScroll={(e) => handleScroll(e)}>
+      {/* <section className="ResultsBox" onScroll={(e) => handleScroll(e)}> */}
       {watchlistHeader}
       {moviesToDisplay}
       <div id="scrolltarget"></div>
-    </section>
+      {/* </section> */}
+    </Wrapper>
   );
 }
 
