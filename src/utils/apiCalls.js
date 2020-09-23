@@ -2,6 +2,7 @@ import { apiKey } from "../secrets/secret";
 
 const endpoints = {
   discover: "https://api.themoviedb.org/3/discover/movie?",
+  findCast: "https://api.themoviedb.org/3/movie/",
 };
 
 export const allGenres = [
@@ -119,6 +120,26 @@ const filterMovies = (results) => {
   return results.filter((movie) => {
     return movie.poster_path !== null;
   });
+};
+
+export const getCast = async (movieID) => {
+  try {
+    const res = await fetch(
+      `${endpoints.findCast}${movieID}/credits?api_key=${apiKey}`
+    );
+    const data = await res.json();
+
+    const mainCast = data.cast
+      .slice(0, 4)
+      .map((actor) => {
+        return actor.name;
+      })
+      .join(", ");
+
+    return [mainCast, movieID];
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const getMovies = async (queryObj) => {

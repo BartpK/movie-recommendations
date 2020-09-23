@@ -1,6 +1,7 @@
 import React from "react";
 import { allGenres } from "../utils/apiCalls";
 import styled from "styled-components";
+import { getCast } from "../utils/apiCalls";
 
 const Wrapper = styled.div`
   width: ${(props) => (props.showMovieDetails ? "100%" : "0%")};
@@ -79,7 +80,13 @@ const Textwrapper = styled.div`
 `;
 
 function MovieDetails(props) {
+  console.log(props);
   if (!props.highlightedMovie) return null;
+
+  const createCastList = () => {
+    if (!props.selectedCast) return null;
+    return <p>Starring: {props.selectedCast[0]}</p>;
+  };
 
   const createWatchlistButtons = () => {
     if (!props.watchlist) {
@@ -119,6 +126,7 @@ function MovieDetails(props) {
   const {
     genre_ids,
     title,
+    id,
     backdrop_path,
     overview,
     release_date,
@@ -151,6 +159,7 @@ function MovieDetails(props) {
       <Genrewrapper>{createGenreTags(genre_ids)}</Genrewrapper>
       <Textwrapper>
         <p className="synopsis">{overview}</p>
+        {createCastList()}
         <p className="releasedate">{release_date.substring(0, 4)}</p>
         <p className="averagerating">Average rating: {vote_average}</p>
       </Textwrapper>

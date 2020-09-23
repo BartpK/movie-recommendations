@@ -7,6 +7,7 @@ import SearchBox from "./components/SearchBox";
 import MovieDetails from "./components/MovieDetails";
 import Navbar from "./components/Navbar";
 import { styled, createGlobalStyle } from "styled-components";
+import { getCast } from "./utils/apiCalls";
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -35,6 +36,7 @@ function App() {
   const [showSearchBox, setShowSearchBox] = useState(false);
   const [showWatchlist, setShowWatchlist] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
+  const [selectedCast, setSelectedCast] = useState();
 
   const saveToWatchlist = (movieObj) => {
     if (watchlist) {
@@ -87,9 +89,15 @@ function App() {
     });
   };
 
+  const handleCastRequest = async (movieID) => {
+    const cast = await getCast(movieID);
+    setSelectedCast(cast);
+  };
+
   const viewMovieDetails = (movieObj) => {
     setHighlightedMovie(movieObj);
     toggleMovieDetails();
+    handleCastRequest(movieObj.id);
   };
 
   const getNextPage = async () => {
@@ -142,6 +150,7 @@ function App() {
                   saveToWatchlist={saveToWatchlist}
                   removeFromWatchlist={removeFromWatchlist}
                   watchlist={watchlist}
+                  selectedCast={selectedCast}
                 />
               </div>
             );
@@ -167,6 +176,7 @@ function App() {
                   saveToWatchlist={saveToWatchlist}
                   removeFromWatchlist={removeFromWatchlist}
                   watchlist={watchlist}
+                  selectedCast={selectedCast}
                 />
               </div>
             );
@@ -193,6 +203,7 @@ function App() {
                   saveToWatchlist={saveToWatchlist}
                   removeFromWatchlist={removeFromWatchlist}
                   watchlist={watchlist}
+                  selectedCast={selectedCast}
                 />
               </div>
             );
