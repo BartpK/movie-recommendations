@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   padding: 0.6rem;
   max-height: 100vh;
   overflow: scroll;
+  max-width: 100vw;
 `;
 
 function ResultsBox(props) {
@@ -37,11 +38,9 @@ function ResultsBox(props) {
   });
   return (
     <Wrapper onScroll={(e) => handleScroll(e)}>
-      {/* <section className="ResultsBox" onScroll={(e) => handleScroll(e)}> */}
       {watchlistHeader}
       {moviesToDisplay}
       <div id="scrolltarget"></div>
-      {/* </section> */}
     </Wrapper>
   );
 }

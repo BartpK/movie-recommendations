@@ -4,6 +4,23 @@ import { getMovies } from "./utils/apiCalls";
 import ResultsBox from "./components/ResultsBox";
 import SearchBox from "./components/SearchBox";
 import MovieDetails from "./components/MovieDetails";
+import Navbar from "./components/Navbar";
+import { styled, createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+* {
+  font-family: Quicksand;
+  padding: 0;
+  margin: 0;
+  color: white;
+}
+
+:focus {
+  outline: none;
+}
+
+
+`;
 
 function App() {
   const [movies, setMovies] = useState();
@@ -99,6 +116,7 @@ function App() {
 
   return (
     <div className="App">
+      <GlobalStyle />
       <SearchBox
         searchMovies={searchMovies}
         toggleSearchBox={toggleSearchBox}
@@ -118,10 +136,10 @@ function App() {
         removeFromWatchlist={removeFromWatchlist}
         watchlist={watchlist}
       />
-      <div className="watchlistbutton" onClick={toggleWatchlist}>
+      {/* <div className="watchlistbutton" onClick={toggleWatchlist}>
         <i className="fas fa-bookmark"></i>
-      </div>
-      {/* <Nav/> */}
+      </div> */}
+      <Navbar />
     </div>
   );
 }

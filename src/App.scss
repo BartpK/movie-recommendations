@@ -1,258 +1,262 @@
+* {
+  padding: 0;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Viga&display=swap");
 
-$backgroundColor: #0b132b;
-$backgroundColor2: #1c2541;
-$backgroundColor3: #3a506b;
-$accentColor: #6fffe9;
+// $backgroundColor: #0b132b;
+// $backgroundColor2: #1c2541;
+// $backgroundColor3: #3a506b;
+// $accentColor: #6fffe9;
 
-:focus {
-  outline: none;
-}
+// :focus {
+//   outline: none;
+// }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-family: "Viga", sans-serif;
-  font-weight: 400;
-}
+// h1,
+// h2,
+// h3,
+// h4,
+// h5 {
+//   font-family: "Viga", sans-serif;
+//   font-weight: 400;
+// }
 
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Quicksand", sans-serif;
-}
+// * {
+//   margin: 0;
+//   padding: 0;
+//   font-family: "Quicksand", sans-serif;
+// }
 
-.ResultsBox {
-  position: absolute;
-  padding: 1rem;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(9, 1fr);
-  gap: 1rem;
-  background-color: $backgroundColor;
-  overflow: scroll;
-}
+// .ResultsBox {
+//   position: absolute;
+//   padding: 1rem;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   display: grid;
+//   grid-template-columns: repeat(3, 1fr);
+//   grid-template-rows: repeat(9, 1fr);
+//   gap: 1rem;
+//   background-color: $backgroundColor;
+//   overflow: scroll;
+// }
 
-.Movie {
-  width: 100%;
-}
+// .Movie {
+//   width: 100%;
+// }
 
-.Movie img {
-  display: block;
-  width: 100%;
-}
+// .Movie img {
+//   display: block;
+//   width: 100%;
+// }
 
-#MovieDetails {
-  background-color: $backgroundColor2;
-  position: sticky;
-  overflow: scroll;
-  padding: 0;
-  bottom: 0;
-  transition: transform 200ms;
-  height: 100vh;
-  color: white;
-}
+// #MovieDetails {
+//   background-color: $backgroundColor2;
+//   position: sticky;
+//   overflow: scroll;
+//   padding: 0;
+//   bottom: 0;
+//   transition: transform 200ms;
+//   height: 100vh;
+//   color: white;
+// }
 
-.closed {
-  transform: translateX(-100vh);
-  transition: transform 200ms;
-}
+// .closed {
+//   transform: translateX(-100vh);
+//   transition: transform 200ms;
+// }
 
-.open {
-  height: 100vh;
-  transform: translateX(0);
-  transition: transform 200ms;
-  z-index: 2;
-}
+// .open {
+//   height: 100vh;
+//   transform: translateX(0);
+//   transition: transform 200ms;
+//   z-index: 2;
+// }
 
-.moviedetailsheader {
-  min-height: 12rem;
-  position: relative;
-}
+// .moviedetailsheader {
+//   min-height: 12rem;
+//   position: relative;
+// }
 
-.moviedetailsheaderoverlay {
-  background-color: rgba(105, 105, 105, 0.6);
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem;
-}
+// .moviedetailsheaderoverlay {
+//   background-color: rgba(105, 105, 105, 0.6);
+//   display: flex;
+//   position: absolute;
+//   bottom: 0;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   padding: 1rem;
+// }
 
-.moviedetailsheaderoverlay h1 {
-  align-self: flex-end;
-  color: white;
-}
+// .moviedetailsheaderoverlay h1 {
+//   align-self: flex-end;
+//   color: white;
+// }
 
-.genretags span {
-  background-color: $backgroundColor3;
-  color: white;
-  border-radius: 20px;
-  padding: 0.4rem;
-  margin: 0 0.4rem 0.4rem 0;
-  display: inline;
-  font-size: 0.8rem;
-}
+// .genretags span {
+//   background-color: $backgroundColor3;
+//   color: white;
+//   border-radius: 20px;
+//   padding: 0.4rem;
+//   margin: 0 0.4rem 0.4rem 0;
+//   display: inline;
+//   font-size: 0.8rem;
+// }
 
-.genretags {
-  padding: 1rem;
-}
+// .genretags {
+//   padding: 1rem;
+// }
 
-.SearchBox {
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  transform: translateY(-440px);
-  transition: transform 200ms;
-  background-color: $backgroundColor2;
-  text-align: center;
-  color: white;
-  clip-path: (
-    polygon(0 0, 0 90%, 40% 90%, 40% 100%, 60% 100%, 60% 90%, 100% 90%, 100% 0)
-  );
-}
+// .SearchBox {
+//   position: fixed;
+//   z-index: 1;
+//   top: 0;
+//   transform: translateY(-440px);
+//   transition: transform 200ms;
+//   background-color: $backgroundColor2;
+//   text-align: center;
+//   color: white;
+//   clip-path: (
+//     polygon(0 0, 0 90%, 40% 90%, 40% 100%, 60% 100%, 60% 90%, 100% 90%, 100% 0)
+//   );
+// }
 
-.SearchBoxOpen {
-  transform: translateY(0px);
-}
+// .SearchBoxOpen {
+//   transform: translateY(0px);
+// }
 
-.searchinput,
-.releasedatecontainer select,
-.sortcontainer select {
-  margin: 1rem;
-  width: 80%;
-  padding: 0.6rem 0.4rem;
-  box-sizing: border-box;
-  background-color: $backgroundColor;
-  border: none;
-  border-bottom: white solid 1px;
-  color: white;
-}
+// .searchinput,
+// .releasedatecontainer select,
+// .sortcontainer select {
+//   margin: 1rem;
+//   width: 80%;
+//   padding: 0.6rem 0.4rem;
+//   box-sizing: border-box;
+//   background-color: $backgroundColor;
+//   border: none;
+//   border-bottom: white solid 1px;
+//   color: white;
+// }
 
-.searchbuttoncontainer button {
-  background-color: $accentColor;
-  border-radius: 1rem;
-  padding: 0.4rem 0.6rem;
-  border: none;
-}
+// .searchbuttoncontainer button {
+//   background-color: $accentColor;
+//   border-radius: 1rem;
+//   padding: 0.4rem 0.6rem;
+//   border: none;
+// }
 
-.genrecontainer {
-  width: 80%;
-  display: block;
-  margin: 0 auto;
-}
+// .genrecontainer {
+//   width: 80%;
+//   display: block;
+//   margin: 0 auto;
+// }
 
-.genrebutton {
-  border-radius: 1rem;
-  padding: 0.4rem;
-  margin: 0.1rem;
-  background-color: $backgroundColor;
-  color: white;
-  border: none;
-}
+// .genrebutton {
+//   border-radius: 1rem;
+//   padding: 0.4rem;
+//   margin: 0.1rem;
+//   background-color: $backgroundColor;
+//   color: white;
+//   border: none;
+// }
 
-.genrebuttonselected {
-  background-color: $accentColor;
-  border-radius: 1rem;
-  padding: 0.4rem;
-  margin: 0.1rem;
-  color: $backgroundColor;
-  border: none;
-}
+// .genrebuttonselected {
+//   background-color: $accentColor;
+//   border-radius: 1rem;
+//   padding: 0.4rem;
+//   margin: 0.1rem;
+//   color: $backgroundColor;
+//   border: none;
+// }
 
-.releasedatecontainer select {
-  width: 25%;
-  margin: 1rem 0.2rem;
-}
+// .releasedatecontainer select {
+//   width: 25%;
+//   margin: 1rem 0.2rem;
+// }
 
-.togglesearch {
-  font-size: 2rem;
-  margin-top: 1rem;
-  padding: 1rem;
-}
+// .togglesearch {
+//   font-size: 2rem;
+//   margin-top: 1rem;
+//   padding: 1rem;
+// }
 
-.caretopen {
-  transform: rotate(0deg);
-}
+// .caretopen {
+//   transform: rotate(0deg);
+// }
 
-.caretclosed {
-  transform: rotate(180deg);
-}
+// .caretclosed {
+//   transform: rotate(180deg);
+// }
 
-#caret {
-  transition: transform 400ms;
-}
+// #caret {
+//   transition: transform 400ms;
+// }
 
-.synopsis,
-.releasedate,
-.averagerating,
-.trailerlink {
-  padding: 1rem;
-}
+// .synopsis,
+// .releasedate,
+// .averagerating,
+// .trailerlink {
+//   padding: 1rem;
+// }
 
-.trailerlink {
-  color: white;
-}
+// .trailerlink {
+//   color: white;
+// }
 
-.moviedetailsheaderoverlay i {
-  display: block;
-  position: absolute;
-  right: 5%;
-}
+// .moviedetailsheaderoverlay i {
+//   display: block;
+//   position: absolute;
+//   right: 5%;
+// }
 
-.watchlistbutton {
-  position: absolute;
-  bottom: 2rem;
-  margin: auto;
-  right: 1rem;
-  z-index: 1;
-  display: block;
-  background-color: $backgroundColor3;
-  border-radius: 55%;
-  width: 3rem;
-  height: 3rem;
-}
+// .watchlistbutton {
+//   position: absolute;
+//   bottom: 2rem;
+//   margin: auto;
+//   right: 1rem;
+//   z-index: 1;
+//   display: block;
+//   background-color: $backgroundColor3;
+//   border-radius: 55%;
+//   width: 3rem;
+//   height: 3rem;
+// }
 
-.watchlistbutton i {
-  font-size: 1.6rem;
-  width: 100%;
-  height: 100%;
-  margin: 0.6rem 0;
-  text-align: center;
-  vertical-align: middle;
-  color: white;
-}
+// .watchlistbutton i {
+//   font-size: 1.6rem;
+//   width: 100%;
+//   height: 100%;
+//   margin: 0.6rem 0;
+//   text-align: center;
+//   vertical-align: middle;
+//   color: white;
+// }
 
-.watchlistheader {
-  grid-column: 1/-1;
-  text-align: center;
-  margin: 4rem 0 0.5rem 0;
-  color: white;
-}
+// .watchlistheader {
+//   grid-column: 1/-1;
+//   text-align: center;
+//   margin: 4rem 0 0.5rem 0;
+//   color: white;
+// }
 
-.addbutton,
-.removebutton {
-  display: block;
-  margin: 1rem;
-  padding: 0.4rem 0.4rem;
-  font-weight: 600;
-  color: white;
-  border: none;
-  border-radius: 1rem;
-}
+// .addbutton,
+// .removebutton {
+//   display: block;
+//   margin: 1rem;
+//   padding: 0.4rem 0.4rem;
+//   font-weight: 600;
+//   color: white;
+//   border: none;
+//   border-radius: 1rem;
+// }
 
-.addbutton {
-  background-color: #86cd82;
-}
+// .addbutton {
+//   background-color: #86cd82;
+// }
 
-.removebutton {
-  background-color: #9e2a2b;
-}
+// .removebutton {
+//   background-color: #9e2a2b;
+// }
