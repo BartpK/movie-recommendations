@@ -8,6 +8,7 @@ import MovieDetails from "./components/MovieDetails";
 import Navbar from "./components/Navbar";
 import { styled, createGlobalStyle } from "styled-components";
 import { getCast } from "./utils/apiCalls";
+import { getRecommendedMovies } from "./utils/apiCalls";
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -37,6 +38,47 @@ function App() {
   const [showWatchlist, setShowWatchlist] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
   const [selectedCast, setSelectedCast] = useState();
+  const [likesList, setLikesList] = useState();
+  const [dislikesList, setDislikesList] = useState();
+  const [recommendations, setRecommendations] = useState();
+
+  const toggleLikesList = (movieID) => {
+    if (likesList) {
+      if (likesList.includes(movieID)) {
+        const newArray = likesList.filter((movie) => {
+          return movie !== movieID;
+        });
+        localStorage.setItem("myLikes", JSON.stringify(newArray));
+        setLikesList(newArray);
+      } else {
+        const newArray = likesList.concat(movieID);
+        localStorage.setItem("myLikes", JSON.stringify(newArray));
+        setLikesList(newArray);
+      }
+    } else {
+      localStorage.setItem("myLikes", JSON.stringify([movieID]));
+      setLikesList([movieID]);
+    }
+  };
+
+  const toggleDislikesList = (movieID) => {
+    if (dislikesList) {
+      if (dislikesList.includes(movieID)) {
+        const newArray = dislikesList.filter((movie) => {
+          return movie !== movieID;
+        });
+        localStorage.setItem("myDislikes", JSON.stringify(newArray));
+        setDislikesList(newArray);
+      } else {
+        const newArray = dislikesList.concat(movieID);
+        localStorage.setItem("myDislikes", JSON.stringify(newArray));
+        setDislikesList(newArray);
+      }
+    } else {
+      localStorage.setItem("myDislikes", JSON.stringify([movieID]));
+      setDislikesList([movieID]);
+    }
+  };
 
   const saveToWatchlist = (movieObj) => {
     if (watchlist) {
@@ -59,15 +101,15 @@ function App() {
     if (showWatchlist) setMovies(newWatchlist);
   };
 
-  const toggleWatchlist = () => {
-    if (showWatchlist) {
-      setShowWatchlist(false);
-      searchMovies(prevSearch);
-    } else {
-      setShowWatchlist(true);
-      setMovies(watchlist);
-    }
-  };
+  // const toggleWatchlist = () => {
+  //   if (showWatchlist) {
+  //     setShowWatchlist(false);
+  //     searchMovies(prevSearch);
+  //   } else {
+  //     setShowWatchlist(true);
+  //     setMovies(watchlist);
+  //   }
+  // };
 
   const searchMovies = async (queryObj) => {
     const movieData = await getMovies(queryObj);
@@ -112,16 +154,28 @@ function App() {
     ////concat results
   };
 
+  const requestRecommendations = async () => {
+    if (!likesList) return;
+    const recommendations = await getRecommendedMovies(likesList, dislikesList);
+    setRecommendations(recommendations);
+  };
+
   const init = async () => {
     const movieData = await getMovies(prevSearch);
     setCurrentPage(movieData.page);
     setMovies(movieData.results);
     setWatchlist(JSON.parse(localStorage.getItem("myWatchlist")));
+    setLikesList(JSON.parse(localStorage.getItem("myLikes")));
+    setDislikesList(JSON.parse(localStorage.getItem("myDislikes")));
   };
 
   useEffect(() => {
     init();
   }, []);
+
+  useEffect(() => {
+    requestRecommendations();
+  }, [likesList, dislikesList]);
 
   return (
     <Router>
@@ -139,6 +193,7 @@ function App() {
                   showSearchBox={showSearchBox}
                 />
                 <ResultsBox
+                  nullMessage={"Loading movies.."}
                   movies={movies}
                   getNextPage={getNextPage}
                   viewMovieDetails={viewMovieDetails}
@@ -151,6 +206,10 @@ function App() {
                   removeFromWatchlist={removeFromWatchlist}
                   watchlist={watchlist}
                   selectedCast={selectedCast}
+                  toggleLikesList={toggleLikesList}
+                  likesList={likesList}
+                  toggleDislikesList={toggleDislikesList}
+                  dislikesList={dislikesList}
                 />
               </div>
             );
@@ -164,6 +223,9 @@ function App() {
             return (
               <div>
                 <ResultsBox
+                  nullMessage={
+                    "Movies that you add to your watchlist will show up here."
+                  }
                   headline={"Your watchlist"}
                   movies={watchlist}
                   getNextPage={getNextPage}
@@ -177,6 +239,10 @@ function App() {
                   removeFromWatchlist={removeFromWatchlist}
                   watchlist={watchlist}
                   selectedCast={selectedCast}
+                  toggleLikesList={toggleLikesList}
+                  likesList={likesList}
+                  toggleDislikesList={toggleDislikesList}
+                  dislikesList={dislikesList}
                 />
               </div>
             );
@@ -190,8 +256,11 @@ function App() {
             return (
               <div>
                 <ResultsBox
-                  headline={"Recommended for you (in progress)"}
-                  movies={movies}
+                  nullMessage={
+                    "Looks like we don't have any recommendations for you yet. Start 'liking' a few movies and your recommendations will show up here."
+                  }
+                  headline={"Recommended for you"}
+                  movies={recommendations}
                   getNextPage={getNextPage}
                   viewMovieDetails={viewMovieDetails}
                   showWatchlist={showWatchlist}
@@ -204,6 +273,10 @@ function App() {
                   removeFromWatchlist={removeFromWatchlist}
                   watchlist={watchlist}
                   selectedCast={selectedCast}
+                  toggleLikesList={toggleLikesList}
+                  likesList={likesList}
+                  toggleDislikesList={toggleDislikesList}
+                  dislikesList={dislikesList}
                 />
               </div>
             );

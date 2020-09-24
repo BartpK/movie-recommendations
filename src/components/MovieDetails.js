@@ -1,7 +1,6 @@
 import React from "react";
 import { allGenres } from "../utils/apiCalls";
 import styled from "styled-components";
-import { getCast } from "../utils/apiCalls";
 
 const Wrapper = styled.div`
   width: ${(props) => (props.showMovieDetails ? "100%" : "0%")};
@@ -12,10 +11,12 @@ const Wrapper = styled.div`
   bottom: 0;
   min-height: 120vh;
   background-color: #0b132b;
+  padding-bottom: 4rem;
 `;
 
 const Watchlistbutton = styled.button`
   margin-left: 1rem;
+
   padding: 0.4rem 0.4rem;
   font-weight: 600;
   color: white;
@@ -25,8 +26,28 @@ const Watchlistbutton = styled.button`
     props.action === "add" ? "#86cd82" : "#9e2a2b"};
 `;
 
+const Likebutton = styled(Watchlistbutton)`
+  background-color: white;
+  color: ${(props) => (props.liked ? "#9e2a2b" : "gray")};
+  i {
+    color: ${(props) => (props.liked ? "#9e2a2b" : "gray")};
+  }
+`;
+
 const Trailerbutton = styled(Watchlistbutton)`
   background-color: #3a506b;
+`;
+
+const Dislikebutton = styled(Watchlistbutton)`
+  background-color: white;
+  color: ${(props) => (props.disliked ? "#9e2a2b" : "gray")};
+  i {
+    color: ${(props) => (props.disliked ? "#9e2a2b" : "gray")};
+  }
+`;
+
+const Buttonswrapper = styled.div`
+  margin-bottom: 6rem;
 `;
 
 const Genretag = styled.span`
@@ -46,7 +67,7 @@ const Header = styled.div`
   justify-content: space-between;
   background-image: url(https://image.tmdb.org/t/p/w500${(props) =>
     props.backdrop_path});
-  height: 10rem;
+  min-height: 10rem;
   padding: 1rem;
   h1 {
     z-index: 1;
@@ -80,7 +101,6 @@ const Textwrapper = styled.div`
 `;
 
 function MovieDetails(props) {
-  console.log(props);
   if (!props.highlightedMovie) return null;
 
   const createCastList = () => {
@@ -95,7 +115,7 @@ function MovieDetails(props) {
           action={"add"}
           onClick={() => props.saveToWatchlist(props.highlightedMovie)}
         >
-          + Add to watchlist
+          + Watchlist
         </Watchlistbutton>
       );
     } else if (
@@ -108,7 +128,7 @@ function MovieDetails(props) {
           action={"add"}
           onClick={() => props.saveToWatchlist(props.highlightedMovie)}
         >
-          + Add to watchlist
+          + Watchlist
         </Watchlistbutton>
       );
     } else {
@@ -117,7 +137,7 @@ function MovieDetails(props) {
           action={"remove"}
           onClick={() => props.removeFromWatchlist(props.highlightedMovie)}
         >
-          - Remove from watchlist
+          - Watchlist
         </Watchlistbutton>
       );
     }
@@ -163,20 +183,48 @@ function MovieDetails(props) {
         <p className="releasedate">{release_date.substring(0, 4)}</p>
         <p className="averagerating">Average rating: {vote_average}</p>
       </Textwrapper>
-      <Trailerbutton
-        onClick={() =>
-          window.open(
-            `https://www.youtube.com/results?search_query=${title}+${release_date.substring(
-              0,
-              4
-            )}+trailer`,
-            "_blank"
-          )
-        }
-      >
-        <i className="fas fa-play"> </i> Watch trailer
-      </Trailerbutton>
-      {createWatchlistButtons()}
+      <Buttonswrapper>
+        <Trailerbutton
+          onClick={() =>
+            window.open(
+              `https://www.youtube.com/results?search_query=${title}+${release_date.substring(
+                0,
+                4
+              )}+trailer`,
+              "_blank"
+            )
+          }
+        >
+          <i className="fas fa-play"> </i>&nbsp;Trailer
+        </Trailerbutton>
+        {createWatchlistButtons()}
+        <Likebutton
+          onClick={() => props.toggleLikesList(id)}
+          liked={
+            props.likesList
+              ? props.likesList.includes(id)
+                ? true
+                : false
+              : false
+          }
+        >
+          <i className="fas fa-heart"></i>
+          &nbsp;Like
+        </Likebutton>
+        <Dislikebutton
+          onClick={() => props.toggleDislikesList(id)}
+          disliked={
+            props.dislikesList
+              ? props.dislikesList.includes(id)
+                ? true
+                : false
+              : false
+          }
+        >
+          <i className="fas fa-heart-broken"></i>
+          &nbsp;Dislike
+        </Dislikebutton>
+      </Buttonswrapper>
     </Wrapper>
   );
 }

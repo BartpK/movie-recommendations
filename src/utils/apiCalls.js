@@ -3,7 +3,10 @@ import { apiKey } from "../secrets/secret";
 const endpoints = {
   discover: "https://api.themoviedb.org/3/discover/movie?",
   findCast: "https://api.themoviedb.org/3/movie/",
+  recommendations: "https://api.themoviedb.org/3/movie/",
 };
+
+// https://api.themoviedb.org/3/movie/605116/recommendations?api_key=6b69d9144524eb1e87a4200f551c9f74
 
 export const allGenres = [
   {
@@ -110,9 +113,7 @@ const getActorID = async (actorName) => {
     );
     const data = await res.json();
     return data.results[0].id;
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 //used to filter out movies without poster image or other missing data
@@ -137,9 +138,7 @@ export const getCast = async (movieID) => {
       .join(", ");
 
     return [mainCast, movieID];
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 export const getMovies = async (queryObj) => {
@@ -175,7 +174,67 @@ export const getMovies = async (queryObj) => {
     const data = await res.json();
     data.results = filterMovies(data.results);
     return data;
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
+};
+
+export const getRecommendedMovies = async (likesList, dislikesList) => {
+  try {
+    const recommendationResults = await Promise.all(
+      likesList.map(async (movieID) => {
+        const res = await fetch(
+          `${endpoints.recommendations}${movieID}/recommendations?api_key=${apiKey}`
+        );
+        const data = await res.json();
+        return data;
+      })
+    );
+    return processRecommendations(
+      recommendationResults,
+      likesList,
+      dislikesList
+    );
+  } catch (err) {}
+};
+
+const processRecommendations = (
+  recommendationsArray,
+  likesList,
+  dislikesList
+) => {
+  let moviesArray = [];
+  recommendationsArray.forEach((response) => {
+    response.results.forEach((result) => {
+      moviesArray.push(result);
+    });
+  });
+
+  moviesArray = moviesArray.sort((a, b) => {
+    return a.popularity < b.popularity ? 1 : -1;
+  });
+
+  const uniqueIDs = Array.from(
+    new Set(
+      moviesArray.map((movie) => {
+        return movie.id;
+      })
+    )
+  );
+
+  const uniqueMovies = uniqueIDs.map((id) => {
+    return moviesArray.find((movie) => movie.id === id);
+  });
+
+  const filteredMovies = uniqueMovies
+    .filter((movie) => {
+      return !likesList.includes(movie.id);
+    })
+
+    .filter((movie) => {
+      return movie.poster_path !== null;
+    })
+    .filter((movie) => {
+      return !dislikesList.includes(movie.id);
+    });
+
+  return filteredMovies;
 };

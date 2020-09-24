@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { BrowserRouter as Router, Link, Switch } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,19 +29,31 @@ const Navitem = styled.div`
     font-size: 0.8rem;
     margin: 0.4rem;
   }
+  i {
+    background-color: ${(props) =>
+      props.currentLocation === props.route ? "#6fffe9" : "none"};
+    color: ${(props) =>
+      props.currentLocation === props.route ? "#1c2541" : "white"};
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.5rem 0.4rem 0.2rem 0.4rem;
+    border-radius: 50%;
+  }
 `;
 
 const Navbar = (props) => {
+  const location = useLocation().pathname;
+
   return (
     <Wrapper>
-      <Navitem>
+      <Navitem currentLocation={location} route={"/"}>
         <Link to="/">
           <i className="fas fa-search"></i>
           <p>Discover</p>
         </Link>
       </Navitem>
 
-      <Navitem>
+      <Navitem currentLocation={location} route={"/recommended"}>
         <Link to="/recommended">
           <i className="far fa-star"></i>
 
@@ -49,7 +61,7 @@ const Navbar = (props) => {
         </Link>
       </Navitem>
 
-      <Navitem>
+      <Navitem currentLocation={location} route={"/watchlist"}>
         <Link to="/watchlist">
           <i className="far fa-bookmark"></i>
 

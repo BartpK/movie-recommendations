@@ -10,6 +10,10 @@ to {
 }
 `;
 
+const Wrapper = styled.div`
+  text-align: center;
+`;
+
 const Thumbnail = styled.img`
   max-width: 100%;
   animation: ${fadeIn} 400ms;
@@ -17,9 +21,9 @@ const Thumbnail = styled.img`
 
 function Movie({ movie, viewMovieDetails }) {
   return (
-    <div className="Movie" onClick={() => viewMovieDetails(movie)}>
+    <Wrapper className="Movie" onClick={() => viewMovieDetails(movie)}>
       <Thumbnail src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`} />
-    </div>
+    </Wrapper>
   );
 }
 

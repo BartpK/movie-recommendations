@@ -23,8 +23,21 @@ const Headline = styled.h1`
   padding: 2rem;
 `;
 
+const Nullmessage = styled.p`
+  grid-column: 1/-1;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+`;
+
 function ResultsBox(props) {
-  if (!props.movies) return null;
+  if (!props.movies)
+    return (
+      <Wrapper>
+        {props.headline ? <Headline>{props.headline}</Headline> : null}
+        <Nullmessage>{props.nullMessage}</Nullmessage>
+      </Wrapper>
+    );
 
   const handleScroll = (e) => {
     const bounding = document
