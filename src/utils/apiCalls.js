@@ -231,10 +231,18 @@ const processRecommendations = (
 
     .filter((movie) => {
       return movie.poster_path !== null;
-    })
-    .filter((movie) => {
+    });
+  console.log("before filter", filteredMovies);
+  console.log(dislikesList);
+
+  console.log("after filter", filteredMovies);
+
+  if (dislikesList) {
+    const withoutDislikes = filteredMovies.filter((movie) => {
       return !dislikesList.includes(movie.id);
     });
-
-  return filteredMovies;
+    return withoutDislikes;
+  } else {
+    return filteredMovies;
+  }
 };
