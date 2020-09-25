@@ -232,10 +232,6 @@ const processRecommendations = (
     .filter((movie) => {
       return movie.poster_path !== null;
     });
-  console.log("before filter", filteredMovies);
-  console.log(dislikesList);
-
-  console.log("after filter", filteredMovies);
 
   if (dislikesList) {
     const withoutDislikes = filteredMovies.filter((movie) => {

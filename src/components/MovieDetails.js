@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
-  min-height: 120vh;
+  min-height: 100vh;
   background-color: #0b132b;
   padding-bottom: 4rem;
 `;
