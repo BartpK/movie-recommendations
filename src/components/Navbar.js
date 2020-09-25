@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   justify-content: space-around;
   width: 100%;
   height: 5rem;
-  position: sticky;
+  position: fixed;
   bottom: 0;
   background-color: #1c2541;
   div:nth-child(2) {
@@ -22,9 +22,8 @@ const Wrapper = styled.div`
 
 const Navitem = styled.div`
   width: 100%;
-  margin: auto;
   text-align: center;
-  padding: auto;
+  padding: 0.6rem 0 0 0;
   p {
     font-size: 0.8rem;
     margin: 0.4rem;
@@ -38,6 +37,7 @@ const Navitem = styled.div`
     height: 1.5rem;
     padding: 0.5rem 0.4rem 0.2rem 0.4rem;
     border-radius: 50%;
+    transition: color 600ms, background 200ms;
   }
 `;
 
@@ -46,28 +46,26 @@ const Navbar = (props) => {
 
   return (
     <Wrapper>
-      <Navitem currentLocation={location} route={"/"}>
-        <Link to="/">
+      <Link to="/" onClick={() => props.setShowMovieDetails(false)}>
+        <Navitem currentLocation={location} route={"/"}>
           <i className="fas fa-search"></i>
           <p>Discover</p>
-        </Link>
-      </Navitem>
+        </Navitem>
+      </Link>
 
-      <Navitem currentLocation={location} route={"/recommended"}>
-        <Link to="/recommended">
+      <Link to="/recommended" onClick={() => props.setShowMovieDetails(false)}>
+        <Navitem currentLocation={location} route={"/recommended"}>
           <i className="far fa-star"></i>
-
           <p>Recommended</p>
-        </Link>
-      </Navitem>
+        </Navitem>
+      </Link>
 
-      <Navitem currentLocation={location} route={"/watchlist"}>
-        <Link to="/watchlist">
+      <Link to="/watchlist" onClick={() => props.setShowMovieDetails(false)}>
+        <Navitem currentLocation={location} route={"/watchlist"}>
           <i className="far fa-bookmark"></i>
-
           <p>Watchlist</p>
-        </Link>
-      </Navitem>
+        </Navitem>
+      </Link>
     </Wrapper>
   );
 };

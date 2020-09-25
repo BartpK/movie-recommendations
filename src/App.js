@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Route } from "react-router-dom";
 import "./App.css";
 import { getMovies } from "./utils/apiCalls";
 import ResultsBox from "./components/ResultsBox";
 import SearchBox from "./components/SearchBox";
 import MovieDetails from "./components/MovieDetails";
 import Navbar from "./components/Navbar";
-import { styled, createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { getCast } from "./utils/apiCalls";
 import { getRecommendedMovies } from "./utils/apiCalls";
 
@@ -22,8 +21,12 @@ const GlobalStyle = createGlobalStyle`
 :focus {
   outline: none;
 }
+`;
 
+const Wrapper = styled.div`
+  height: 100vh;
 
+  overflow: hidden;
 `;
 
 function App() {
@@ -42,7 +45,6 @@ function App() {
   const [likesList, setLikesList] = useState();
   const [dislikesList, setDislikesList] = useState();
   const [recommendations, setRecommendations] = useState();
-  const [currentPath, setCurrentPath] = useState();
 
   const toggleLikesList = (movieID) => {
     if (likesList) {
@@ -122,6 +124,11 @@ function App() {
   };
 
   const toggleMovieDetails = () => {
+    if (document.getElementById("detailsWrapper")) {
+      setTimeout(() => {
+        document.getElementById("detailsWrapper").scrollTo(0, 0);
+      }, 400);
+    }
     setShowMovieDetails((prevState) => {
       return !prevState;
     });
@@ -176,15 +183,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setShowMovieDetails(false);
-  }, [currentPath]);
-
-  useEffect(() => {
     requestRecommendations();
   }, [likesList, dislikesList]);
 
   return (
-    <div className="App">
+    <Wrapper>
       <GlobalStyle />
       <Route
         exact
@@ -310,8 +313,8 @@ function App() {
       {/* <div className="watchlistbutton" onClick={toggleWatchlist}>
         <i className="fas fa-bookmark"></i>
       </div> */}
-      <Navbar />
-    </div>
+      <Navbar setShowMovieDetails={setShowMovieDetails} />
+    </Wrapper>
   );
 }
 

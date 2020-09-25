@@ -3,16 +3,20 @@ import Movie from "./Movie";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  box-sizing: border-box;
   background-color: #0b132b;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(9, 1fr);
   gap: 0.6rem;
   padding: 0.6rem;
-  max-height: 100vh;
-  min-height: 100vh;
+  height: 100vh;
   overflow: scroll;
   max-width: 100vw;
+`;
+
+const Spacer = styled.div`
+  height: 16rem;
 `;
 
 const Headline = styled.h1`
@@ -65,6 +69,7 @@ function ResultsBox(props) {
       {watchlistHeader}
       {moviesToDisplay}
       <div id="scrolltarget"></div>
+      <Spacer />
     </Wrapper>
   );
 }

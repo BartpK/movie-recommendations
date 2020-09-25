@@ -3,20 +3,21 @@ import { allGenres } from "../utils/apiCalls";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: ${(props) => (props.showMovieDetails ? "100%" : "0%")};
+  transform: translateX(
+    ${(props) => (props.showMovieDetails ? "0vw" : "-100vw")}
+  );
   overflow-x: hidden;
   overflow-y: scroll;
   position: absolute;
   top: 0;
   bottom: 0;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #0b132b;
-  padding-bottom: 4rem;
+  transition: transform 200ms;
 `;
 
 const Watchlistbutton = styled.button`
   margin-left: 1rem;
-
   padding: 0.4rem 0.4rem;
   font-weight: 600;
   color: white;
@@ -47,7 +48,7 @@ const Dislikebutton = styled(Watchlistbutton)`
 `;
 
 const Buttonswrapper = styled.div`
-  margin-bottom: 6rem;
+  margin: 1.6rem 0 1.6rem 0;
 `;
 
 const Genretag = styled.span`
@@ -56,7 +57,8 @@ const Genretag = styled.span`
   border-radius: 20px;
   padding: 0.4rem;
   margin-right: 0.4rem;
-  display: inline;
+  margin-bottom: 0.4rem;
+  display: inline-block;
   font-size: 0.8rem;
 `;
 
@@ -67,6 +69,7 @@ const Header = styled.div`
   justify-content: space-between;
   background-image: url(https://image.tmdb.org/t/p/w500${(props) =>
     props.backdrop_path});
+  background-size: cover;
   min-height: 10rem;
   padding: 1rem;
   h1 {
@@ -90,13 +93,19 @@ const Closebutton = styled(Watchlistbutton)`
   z-index: 1;
 `;
 
+const Backbutton = styled(Closebutton)`
+  display: block;
+  margin: 0 auto 10rem auto;
+  background-color: #1c2541;
+`;
+
 const Genrewrapper = styled.div`
-  padding: 1rem;
+  padding: 0.6rem 1rem 0.6rem 1rem;
 `;
 
 const Textwrapper = styled.div`
   p {
-    padding: 1rem;
+    padding: 0.6rem 1rem 0.6rem 1rem;
   }
 `;
 
@@ -165,7 +174,7 @@ function MovieDetails(props) {
   };
 
   return (
-    <Wrapper showMovieDetails={props.showMovieDetails}>
+    <Wrapper id="detailsWrapper" showMovieDetails={props.showMovieDetails}>
       <Header backdrop_path={backdrop_path}>
         <Closebutton onClick={props.toggleMovieDetails}>
           <i className="fas fa-chevron-left">
@@ -225,6 +234,15 @@ function MovieDetails(props) {
           &nbsp;Dislike
         </Dislikebutton>
       </Buttonswrapper>
+      <Backbutton
+        onClick={() => {
+          props.toggleMovieDetails();
+        }}
+      >
+        <i className="fas fa-chevron-left">
+          <span> Back</span>
+        </i>
+      </Backbutton>
     </Wrapper>
   );
 }

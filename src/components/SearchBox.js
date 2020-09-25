@@ -3,7 +3,7 @@ import { allGenres } from "../utils/apiCalls";
 import styled from "styled-components";
 
 const Searchcontrolswrapper = styled.div`
-  max-height: ${(props) => (props.showSearchBox ? "80vh" : "0vh")};
+  max-height: ${(props) => (props.showSearchBox ? "90vh" : "0vh")};
   transition: max-height 200ms;
 `;
 
